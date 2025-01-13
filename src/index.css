@@ -74,33 +74,66 @@ body {
     padding: 7px;
     cursor: pointer;
   }
-   .mealInfo img{
-    width: 400px;
-    height: 400px;
+  .mealInfo img {
+    width: 100%; /* Adjusts image size for smaller screens */
+    max-width: 400px; /* Ensures it doesn't exceed the original size */
+    height: auto; /* Maintains aspect ratio */
     border-radius: 11px;
-   }
-   .mealInfo {
-    /* width: 90%; */
-    height: 90vh;
+  }
+  
+  .mealInfo {
+    width: 90%; /* Ensures it adapts to smaller screen widths */
+    height: auto; /* Allows height to adjust naturally */
     margin: auto;
     display: flex;
+    flex-direction: column; /* Stacks items vertically on smaller screens */
     gap: 22px;
-    justify-content:center ;
+    justify-content: center;
     align-items: center;
     background-color: rgb(255, 181, 42);
     padding: 32px;
-   }
-   .mealInfo button{
+  }
+  
+  .mealInfo button {
     border: none;
-    padding: 9px;
+    padding: 9px 16px; /* Adds some horizontal padding */
     border-radius: 6px;
-    font-size: 19px;
+    font-size: 16px; /* Adjust font size for better readability on small screens */
     background-color: orangered;
     color: #fff;
-   }
-  .mealInfo .info{
-    margin-top: -112px;
+    cursor: pointer; /* Indicates clickability */
   }
+  
+  .mealInfo button:hover {
+    background-color: darkred; /* Adds hover effect for interactivity */
+  }
+  
+  .mealInfo .info {
+    margin-top: 0; /* Adjusts for better spacing on smaller screens */
+    text-align: center; /* Centers text for a neat look */
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media (min-width: 768px) {
+    .mealInfo {
+      flex-direction: row; /* Switch back to horizontal layout for medium screens */
+      height: 90vh; /* Maintain original height */
+    }
+    .mealInfo .info {
+      margin-top: -112px; /* Reapply margin for larger screens */
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .mealInfo {
+      gap: 16px; /* Reduce gaps for smaller screens */
+      padding: 16px; /* Adjust padding for compact layout */
+    }
+    .mealInfo button {
+      font-size: 14px; /* Reduce button font size for smaller screens */
+    }
+  }
+  
   .msg{
     text-align: center;
   }

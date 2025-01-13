@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 const Mealinfo = () => {
   const { mealid } = useParams(); // Gives the id from the link
   const [info, setInfo] = useState(null);
+  const [isSpeaking, setIsSpeaking] = useState(false); // To track speech state
+  const speechInstance = new SpeechSynthesisUtterance(); // Create a SpeechSynthesisUtterance instance
 
   useEffect(() => {
     const getInfo = async () => {
@@ -22,18 +24,24 @@ const Mealinfo = () => {
   if (!info) {
     return <div>Loading...</div>;
   }
-  function listen() {
-    const speech = new SpeechSynthesisUtterance();
-    speech.text = info.strInstructions;
-    speech.volume = 1;
-    speech.rate = 1;
-    speech.pitch = 1;
-    window.speechSynthesis.speak(speech);
-    
+
+  const listen = () => {
+    if (isSpeaking) {
+      window.speechSynthesis.pause(); // Pause if currently speaking
+    } else {
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.resume(); // Resume if paused
+      } else {
+        // Configure the SpeechSynthesisUtterance instance
+        speechInstance.text = info.strInstructions;
+        speechInstance.volume = 1;
+        speechInstance.rate = 1;
+        speechInstance.pitch = 1;
+        window.speechSynthesis.speak(speechInstance); // Start speech
+      }
     }
-    // function pause(){
-    //     window.speechSynthesis.pause();
-    // }
+    setIsSpeaking(!isSpeaking); // Toggle speech state
+  };
 
   return (
     <>
@@ -45,11 +53,10 @@ const Mealinfo = () => {
           <h3>Instructions:</h3>
           <p>{info.strInstructions}</p>
         </div>
-        <button onClick={listen}>Listen Recipe</button>
-        {/* <button onClick={pause}>Pause</button>
-         */}
+        <button onClick={listen}>
+          {isSpeaking ? "Pause Recipe" : "Listen Recipe"}
+        </button>
       </div>
-      
     </>
   );
 };
