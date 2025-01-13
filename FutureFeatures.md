@@ -1,3 +1,4 @@
-Personised Diet Planner
+Personified Diet Planner
 
-Text to speech in recipe
+Text to speech in recipe DONE
+Implement pause feature which is not functioning properly
